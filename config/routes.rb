@@ -6,37 +6,41 @@ Terminal::Application.routes.draw do
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
 
-  resources :dashboard do
-    get 'set_locale', :on => :collection
-  end
-  resources :users do
-    #match 'user/find' => 'users#find', :on => :member
+  root :to => 'dashboard#locales'
 
-    get 'search', :on => :collection
-    get 'find', :on => :collection
-    get 'info', :on => :collection
-    get 'show_info', :on => :collection
+  scope "/:locale" do
+    resources :dashboard do
+      get 'set_locale', :on => :collection
+    end
+    resources :users do
+      #match 'user/find' => 'users#find', :on => :member
+
+      get 'search', :on => :collection
+      get 'find', :on => :collection
+      get 'info', :on => :collection
+      get 'show_info', :on => :collection
+
+      resources :programs do
+        get 'task', :on => :member
+        get 'info', :on => :member
+        get 'begin_program', :on => :member
+        get 'user_info', :on => :member
+      end
+
+      resources :tasks do
+        get 'answer', :on => :member
+        get 'reshow', :on => :member
+        get 'task_again', :on => :member
+        get 'task_recap', :on => :member
+      end
+    end
 
     resources :programs do
-      get 'task', :on => :member
       get 'info', :on => :member
-      get 'begin_program', :on => :member
-      get 'user_info', :on => :member
-    end
 
-    resources :tasks do
-      get 'answer', :on => :member
-      get 'reshow', :on => :member
-      get 'task_again', :on => :member
-      get 'task_recap', :on => :member
-    end
-  end
+      resources :tasks do
 
-  resources :programs do
-    get 'info', :on => :member
-
-    resources :tasks do
-
+      end
     end
   end
 
@@ -98,7 +102,7 @@ Terminal::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'dashboard#locales'
+
 
   # See how all your routes lay out with "rake routes"
 

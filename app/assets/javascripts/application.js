@@ -25,7 +25,7 @@ function TERMINAL_Init(){
     // if ($('.user_name_field').lenght > 0 ){
     //     var locale = window.location.search.slice(-2);
     // }
-    var locale = window.location.search.slice(-2);
+    var locale = window.location.pathname.slice(1,3);
 
 	var audio = document.getElementsByTagName("audio")[0];
 

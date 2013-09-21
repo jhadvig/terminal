@@ -4,7 +4,6 @@ class ApplicationController < ActionController::Base
   before_filter :locale_setter
 
   def locale_setter
-    binding
     I18n.locale = params[:locale] #|| I18n.default_locale
   end
 
