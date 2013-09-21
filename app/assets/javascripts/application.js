@@ -37,7 +37,7 @@ function TERMINAL_Init(){
 
     $('.name_tooltip').tooltip({ 'trigger':'click',
                                 'title': tooltip_title,
-                                'placement': 'bottom'});
+                                'placement': 'right'});
 
 	$('a.disabled').on("click", function (e) {
         e.preventDefault();
