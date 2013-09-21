@@ -6,6 +6,18 @@ Terminal::Application.routes.draw do
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
 
+  namespace :admin do
+
+    root :to => 'dashboard#index'
+    resources :dashboard
+    resources :users
+    resources :tasks
+    resources :programs do
+      resources :tasks
+    end
+    resources :setting
+  end
+
   root :to => 'dashboard#locales'
 
   scope "/:locale" do
@@ -46,17 +58,7 @@ Terminal::Application.routes.draw do
 
 
 
-  namespace :admin do
 
-    root :to => 'dashboard#index'
-    resources :dashboard
-    resources :users
-    resources :tasks
-    resources :programs do
-      resources :tasks
-    end
-    resources :setting
-  end
 
 
 

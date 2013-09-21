@@ -1,4 +1,4 @@
-class Admin::SettingController < Admin::DashboardController
+class Admin::SettingController < Admin::ApplicationController
 
   def show
     @setting = Setting.find(1)
