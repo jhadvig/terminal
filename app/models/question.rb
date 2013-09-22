@@ -1,3 +1,5 @@
+#encoding: utf-8
+
 class Question < ActiveRecord::Base
   attr_accessible :answer, :question_text, :type
 

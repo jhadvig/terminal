@@ -1,3 +1,5 @@
+#encoding: utf-8
+
 class Program < ActiveRecord::Base
   attr_accessible :info, :name, :program_task, :status, :mp3, :language
 

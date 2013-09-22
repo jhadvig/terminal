@@ -1,3 +1,5 @@
+#encoding: utf-8
+
 class Task < ActiveRecord::Base
   attr_accessible :name, :program_id, :rec, :task, :status, :question, :question_answer, :question_type, :task_answers, :reverse, :good, :bad
 
@@ -5,7 +7,7 @@ class Task < ActiveRecord::Base
 
   serialize :task_answers,Array
 
-  validates :name, :presence => true, uniqueness: true
+  validates :name, :presence => true, :uniqueness => {:scope => :program_id}
   validates :program_id, :presence => true
   validates :question, :presence => true
 

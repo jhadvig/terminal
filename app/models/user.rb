@@ -1,3 +1,5 @@
+#encoding: utf-8
+
 class User < ActiveRecord::Base
   attr_accessible :answers, :name, :program_id, :program_status, :task_readed, :task_percentage
 
