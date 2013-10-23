@@ -3,29 +3,29 @@
 		%i.icon-tasks
 		Uprav úkol:
 		= @task.name
-.new_task_form
+.new_task_form.d
 	= form_tag [:admin,@task], :method => :put do
 		.name.control-group
 			= label_tag "Jméno"
-			= text_field_tag :name, nil, :autocomplete => "off"
+			= text_field_tag :name, @task.name, :autocomplete => "off"
 		.task.control-group
 			.areas
 				.task.control-group
 					= label_tag "Úkol"
-					= text_area_tag :task, nil, :autocomplete => "off"
+					= text_area_tag :task, @task.task, :autocomplete => "off"
 			.areas
 				.rec.control-group
 					= label_tag "Motivace"
-					= text_area_tag :rec, nil, :autocomplete => "off"
+					= text_area_tag :rec, @task.rec, :autocomplete => "off"
 		.task.control-group
 			.areas
 				.reverse.control-group
 					= label_tag "Úkol - opak"
-					= text_area_tag :reverse, nil, :autocomplete => "off"
+					= text_area_tag :reverse, @task.reverse, :autocomplete => "off"
 			.areas
 				.question.control-group
 					= label_tag "Otázka"
-					= text_area_tag :question, nil, :autocomplete => "off"
+					= text_area_tag :question, @task.question, :autocomplete => "off"
 
 		%ul.nav.nav-tabs.first
 
@@ -33,11 +33,11 @@
 			.areas
 				.reverse.control-group
 					= label_tag "Dobrá odpověď"
-					= text_area_tag :good, nil, :autocomplete => "off"
+					= text_area_tag :good, @task.good, :autocomplete => "off"
 			.areas
 				.question.control-group
 					= label_tag "Špatná odpověď"
-					= text_area_tag :bad, nil, :autocomplete => "off"
+					= text_area_tag :bad, @task.bad, :autocomplete => "off"
 
 		%ul.nav.nav-tabs.second
 
@@ -52,7 +52,7 @@
 						%a{:href => "#messages"} Messages
 
 				.tab-content
-					#home.tab-pane.active
+					#home.tab-pane{:class => ("active" if @task.task_answers.count == 1)}
 						.header
 							Zadej odpověď:
 						.info
@@ -66,7 +66,7 @@
 								= "<<300  :uživatel musí zadat menší hodnotu než 300"
 							%li
 								= "+-50:300  :uživatel musí zadat hodnotu v intervalu +-50 hodnoty 300"
-					#profile.tab-pane
+					#profile.tab-pane{:class => ("active" if @task.task_answers.count == 2)}
 						.header
 							Ano / Ne odpověd:
 						.info
@@ -74,7 +74,7 @@
 						.info
 							Správnou odpověď je třeba zadat do prvního pole, nesprávnou do druhého pole
 
-					#messages.tab-pane
+					#messages.tab-pane{:class => ("active" if @task.task_answers.count > 2)}
 						.header
 							Blok odpovedí:
 						.info
@@ -86,25 +86,15 @@
 
 			.answers
 
-				.answer.answer1.control-group
-					= label_tag "Odpověď 1 - Správná odpověď"
-					= text_field_tag :answer1, nil, :autocomplete => "off"
-
-				.answer.answer2.control-group.hide
-					= label_tag "Odpověď 2"
-					= text_field_tag :answer2, nil, :autocomplete => "off"
-
-				.answer.answer3.control-group.hide
-					= label_tag "Odpověď 3"
-					= text_field_tag :answer3, nil, :autocomplete => "off"
-
-				.answer.answer4.control-group.hide
-					= label_tag "Odpověď 4"
-					= text_field_tag :answer4, nil, :autocomplete => "off"
-
-				.answer.answer5.control-group.hide
-					= label_tag "Odpověď 5"
-					= text_field_tag :answer5, nil, :autocomplete => "off"
+				- 1.upto(5) do |i|
+					- if @task.task_answers[i-1]
+						= content_tag :div, :class => "answer answer#{i} control-group" do
+							= label_tag "Odpověď #{i} - Správná odpověď"
+							= text_field_tag "answer#{i}".to_sym, @task.task_answers[i-1], :autocomplete => "off"
+					- else
+						= content_tag :div, :class => "answer answer#{i} control-group hide" do
+							= label_tag "Odpověď #{i} - Správná odpověď"
+							= text_field_tag "answer#{i}".to_sym, @task.task_answers[i-1], :autocomplete => "off"
 
 				.add_answer_button
 					= button_tag :type => "button", :class => "btn btn-success add_answer" do
