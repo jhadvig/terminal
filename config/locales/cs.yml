@@ -26,3 +26,4 @@ cs:
   invalid_name: "Neplatné jméno"
   name_exists: "Jméno existuje"
   name_dont_exists: "Jméno neexistuje"
+  next_program: "Pokračuj dalším programem"
